@@ -1,3 +1,4 @@
+import os
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import (
     Updater,
@@ -10,6 +11,10 @@ import subprocess
 
 # разрешенные пользователи
 ALLOWED_USERS = [452614431, 1328995399]
+
+TOKEN = os.environ.get("WAKEBOT_TOKEN")
+if not TOKEN:
+    raise ValueError("Токен бота не задан! Создайте /root/.wakebot_env с WAKEBOT_TOKEN")
 
 # список ПК
 PCS = {
