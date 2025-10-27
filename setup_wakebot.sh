@@ -24,6 +24,19 @@ which screen
 echo "==> Устанавливаем python-библиотеки..."
 $PYTHON -m pip install --no-cache-dir python-telegram-bot==13.15 APScheduler
 
+# === Запрос токена у пользователя ===
+ENV_FILE=/root/.wakebot_env
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "==> Введите токен Telegram бота (BotFather):"
+    read -r BOT_TOKEN
+    echo "WAKEBOT_TOKEN=$BOT_TOKEN" > "$ENV_FILE"
+    chmod 600 "$ENV_FILE"
+    echo "Токен сохранён в $ENV_FILE"
+else
+    echo "Файл $ENV_FILE уже существует. Токен используется из него."
+fi
+
 echo "==> Создаём init-скрипт..."
 cat << 'EOF' > $INIT_SCRIPT
 #!/bin/sh /etc/rc.common
