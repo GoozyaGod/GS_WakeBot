@@ -12,6 +12,14 @@ import subprocess
 # разрешенные пользователи
 ALLOWED_USERS = [452614431, 1328995399]
 
+# Попытка загрузить токен из файла
+ENV_FILE = "/root/.wakebot_env"
+if os.path.exists(ENV_FILE):
+    with open(ENV_FILE, "r") as f:
+        for line in f:
+            if line.startswith("WAKEBOT_TOKEN="):
+                os.environ["WAKEBOT_TOKEN"] = line.strip().split("=", 1)[1]
+
 TOKEN = os.environ.get("WAKEBOT_TOKEN")
 if not TOKEN:
     raise ValueError("Токен бота не задан! Создайте /root/.wakebot_env с WAKEBOT_TOKEN")

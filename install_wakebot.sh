@@ -29,9 +29,14 @@ ENV_FILE=/root/.wakebot_env
 
 if [ ! -f "$ENV_FILE" ]; then
     echo "==> Введите токен Telegram бота (BotFather):"
-    read -r BOT_TOKEN
-    echo "WAKEBOT_TOKEN=$BOT_TOKEN" > "$ENV_FILE"
-    chmod 600 "$ENV_FILE"
+    read BOT_TOKEN
+    if [ -z "$BOT_TOKEN" ]; then
+        echo "Ошибка: токен не введён!"
+        exit 1
+    fi
+    # Создаём файл корректно
+    echo WAKEBOT_TOKEN=$BOT_TOKEN > $ENV_FILE
+    chmod 600 $ENV_FILE
     echo "Токен сохранён в $ENV_FILE"
 else
     echo "Файл $ENV_FILE уже существует. Токен используется из него."
